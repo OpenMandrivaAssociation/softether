@@ -1,0 +1,91 @@
+diff --git a/systemd/softether-vpnbridge.service b/systemd/softether-vpnbridge.service
+new file mode 100644
+index 0000000..2f50882
+--- /dev/null
++++ b/systemd/softether-vpnbridge.service
+@@ -0,0 +1,23 @@
++[Unit]
++Description=SoftEther VPN Bridge
++After=network.target auditd.service
++ConditionPathExists=!/opt/vpnbridge/do_not_run
++
++[Service]
++Type=forking
++ExecStart=/opt/vpnbridge/vpnbridge start
++ExecStop=/opt/vpnbridge/vpnbridge stop
++KillMode=process
++Restart=on-failure
++
++# Hardening
++PrivateTmp=yes
++ProtectHome=yes
++ProtectSystem=full
++ReadOnlyDirectories=/
++ReadWriteDirectories=-/opt/vpnbridge
++CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE CAP_NET_BROADCAST CAP_NET_RAW CAP_SYS_NICE CAP_SYS_ADMIN CAP_SETUID
++
++[Install]
++WantedBy=multi-user.target
++
+diff --git a/systemd/softether-vpnclient.service b/systemd/softether-vpnclient.service
+new file mode 100644
+index 0000000..1e9dbd0
+--- /dev/null
++++ b/systemd/softether-vpnclient.service
+@@ -0,0 +1,25 @@
++[Unit]
++Description=SoftEther VPN Client
++After=network.target auditd.service
++ConditionPathExists=!/opt/vpnclient/do_not_run
++
++[Service]
++Type=forking
++EnvironmentFile=-/opt/vpnclient
++ExecStart=/opt/vpnclient/vpnclient start
++ExecStop=/opt/vpnclient/vpnclient stop
++KillMode=process
++Restart=on-failure
++
++# Hardening
++PrivateTmp=yes
++ProtectHome=yes
++ProtectSystem=full
++ReadOnlyDirectories=/
++ReadWriteDirectories=-/opt/vpnclient
++CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE CAP_NET_BROADCAST CAP_NET_RAW CAP_SYS_NICE CAP_SYS_ADMIN CAP_SETUID
++
++[Install]
++WantedBy=multi-user.target
++
++
+diff --git a/systemd/softether-vpnserver.service b/systemd/softether-vpnserver.service
+new file mode 100644
+index 0000000..951b13d
+--- /dev/null
++++ b/systemd/softether-vpnserver.service
+@@ -0,0 +1,25 @@
++[Unit]
++Description=SoftEther VPN Server
++After=network.target auditd.service
++ConditionPathExists=!/opt/vpnserver/do_not_run
++
++[Service]
++Type=forking
++EnvironmentFile=-/opt/vpnserver
++ExecStart=/opt/vpnserver/vpnserver start
++ExecStop=/opt/vpnserver/vpnserver stop
++KillMode=process
++Restart=on-failure
++
++# Hardening
++PrivateTmp=yes
++ProtectHome=yes
++ProtectSystem=full
++ReadOnlyDirectories=/
++ReadWriteDirectories=-/opt/vpnserver
++CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE CAP_NET_BROADCAST CAP_NET_RAW CAP_SYS_NICE CAP_SYS_ADMIN CAP_SETUID
++
++[Install]
++WantedBy=multi-user.target
++
++
