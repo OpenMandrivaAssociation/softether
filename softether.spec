@@ -1,10 +1,9 @@
 %define debug_package %{nil}
 
 Name: softether
-Version: 4.21
+Version: 4.27
 Release: 1
-Source0: http://www.softether-download.com/files/softether/v%{version}-9613-beta-2016.04.24-tree/Source_Code/softether-src-v%{version}-9613-beta.tar.gz
-Patch0: https://patch-diff.githubusercontent.com/raw/SoftEtherVPN/SoftEtherVPN/pull/180.patch
+Source0: http://www.softether-download.com/files/softether/v%{version}-9666-beta-2018.04.21-tree/Source_Code/softether-src-v%{version}-9666-beta.tar.gz
 Summary: VPN software
 URL: http://softether.org/
 License: GPL
@@ -17,8 +16,7 @@ SoftEther VPN ("SoftEther" means "Software Ethernet") is one of the world's
 most powerful and easy-to-use multi-protocol VPN software.
 
 %prep
-%setup -qn v%{version}-9613
-%apply_patches
+%autosetup -n v%{version}-9666
 
 sed -i -e "s,DIR=/,DIR=\$(DESTDIR)/,g;s,/usr/vpn,%{_libexecdir}/vpn,g" src/makefiles/*
 sed -i -e "s,/opt,%{_libexecdir},g" systemd/*.service
