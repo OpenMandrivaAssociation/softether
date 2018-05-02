@@ -10,6 +10,10 @@ License: GPL
 Group: Networking/Other
 BuildRequires: readline-devel
 BuildRequires: pkgconfig(libssl)
+BuildRequires: pkgconfig(zlib)
+BuildRequires: pkgconfig(ncurses)
+BuildRequires: pkgconfig(libssl)
+BuildRequires: pkgconfig(libcrypto)
 
 %description
 SoftEther VPN ("SoftEther" means "Software Ethernet") is one of the world's
@@ -19,6 +23,7 @@ most powerful and easy-to-use multi-protocol VPN software.
 %autosetup -n v%{version}-9666
 
 sed -i -e "s,DIR=/,DIR=\$(DESTDIR)/,g;s,/usr/vpn,%{_libexecdir}/vpn,g" src/makefiles/*
+sed -i -e 's|-O2|%{optflags}|g' src/makefiles/*
 sed -i -e "s,/opt,%{_libexecdir},g" systemd/*.service
 
 if uname -p |grep -q 64 || [ "`uname -p`" = "s390x" ]; then
