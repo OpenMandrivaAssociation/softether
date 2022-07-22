@@ -1,9 +1,9 @@
 %define debug_package %{nil}
 
 Name: softether
-Version: 4.27
-Release: 3
-Source0: http://www.softether-download.com/files/softether/v%{version}-9666-beta-2018.04.21-tree/Source_Code/softether-src-v%{version}-9666-beta.tar.gz
+Version: 4.39
+Release: 1
+Source0: http://www.softether-download.com/files/softether/v%{version}-9772-beta-2022.04.26-tree/Source_Code/softether-src-v%{version}-9772-beta.tar.gz
 Summary: VPN software
 URL: http://softether.org/
 License: GPL
@@ -20,7 +20,7 @@ SoftEther VPN ("SoftEther" means "Software Ethernet") is one of the world's
 most powerful and easy-to-use multi-protocol VPN software.
 
 %prep
-%autosetup -n v%{version}-9666
+%autosetup -n v%{version}-9772
 
 sed -i -e "s,DIR=/,DIR=\$(DESTDIR)/,g;s,/usr/vpn,%{_libexecdir}/vpn,g" src/makefiles/*
 sed -i -e 's|-O2|%{optflags}|g' src/makefiles/*
@@ -34,17 +34,17 @@ fi
 ln -s src/makefiles/%{_target_os}_$BITS.mak Makefile
 
 %build
-%make
+%make_build
 
 %install
 mkdir -p %{buildroot}%{_bindir}
-%makeinstall_std
+%make_install
 sed -i -e 's,%{buildroot},,g' %{buildroot}%{_bindir}/*
 
-mkdir -p %{buildroot}/lib/systemd/system
-cp -a systemd/*.service %{buildroot}/lib/systemd/system/
+mkdir -p %{buildroot}%{_unitdir}
+cp -a systemd/*.service %{buildroot}%{_unitdir}/
 
 %files
 %{_bindir}/*
 %{_libexecdir}/vpn*
-/lib/systemd/system/*.service
+%{_unitdir}/*.service
