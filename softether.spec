@@ -2,7 +2,7 @@
 
 Name: softether
 Version: 4.39
-Release: 1
+Release: 2
 Source0: http://www.softether-download.com/files/softether/v%{version}-9772-beta-2022.04.26-tree/Source_Code/softether-src-v%{version}-9772-beta.tar.gz
 Summary: VPN software
 URL: http://softether.org/
