@@ -1,0 +1,40 @@
+diff -up v4.42-9798/src/Cedar/BridgeUnix.c.omv~ v4.42-9798/src/Cedar/BridgeUnix.c
+--- v4.42-9798/src/Cedar/BridgeUnix.c.omv~	2023-08-23 15:21:47.027472192 +0200
++++ v4.42-9798/src/Cedar/BridgeUnix.c	2023-08-23 15:22:01.814573579 +0200
+@@ -1540,6 +1540,10 @@ typedef struct UNIXTHREAD
+ 	bool finished;
+ } UNIXTHREAD;
+ 
++#ifndef NO_VLAN
++extern void FreeTap(VLAN *v);
++#endif
++
+ // Close Ethernet adapter
+ void CloseEth(ETH *e)
+ {
+diff -up v4.42-9798/src/Cedar/Console.c.omv~ v4.42-9798/src/Cedar/Console.c
+--- v4.42-9798/src/Cedar/Console.c.omv~	2023-08-23 15:22:15.081665289 +0200
++++ v4.42-9798/src/Cedar/Console.c	2023-08-23 15:22:52.865930177 +0200
+@@ -103,7 +103,7 @@
+ // Console Service
+ 
+ #include "CedarPch.h"
+-
++extern int getch(void);
+ 
+ // Display the help for the command
+ void PrintCmdHelp(CONSOLE *c, char *cmd_name, TOKEN_LIST *param_list)
+diff -up v4.42-9798/src/Mayaqua/Unix.c.omv~ v4.42-9798/src/Mayaqua/Unix.c
+--- v4.42-9798/src/Mayaqua/Unix.c.omv~	2023-08-23 15:20:26.830938712 +0200
++++ v4.42-9798/src/Mayaqua/Unix.c	2023-08-23 15:21:20.742294210 +0200
+@@ -309,9 +309,8 @@ OS_DISPATCH_TABLE *UnixGetDispatchTable(
+ 	return &t;
+ }
+ 
+-static void *signal_received_for_ignore(int sig, siginfo_t *info, void *ucontext) 
++static void signal_received_for_ignore(int sig, siginfo_t *info, void *ucontext) 
+ {
+-	return NULL;
+ }
+ 
+ // Ignore the signal flew to the thread
