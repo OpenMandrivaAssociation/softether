@@ -9,6 +9,7 @@ Summary: VPN software
 URL: https://softether.org/
 License: GPL
 Group: Networking/Other
+BuildRequires:	make
 BuildRequires: readline-devel
 BuildRequires: pkgconfig(libssl)
 BuildRequires: pkgconfig(zlib)
